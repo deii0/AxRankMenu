@@ -22,3 +22,6 @@ permissions:
     default: op
   axrankmenu.addrank:
     default: op
+  axrankmenu.admin.test:
+    default: op
+    description: Allows testing effects with custom durations

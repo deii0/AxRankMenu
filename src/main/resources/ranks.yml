@@ -1,8 +1,26 @@
 # DOCUMENTATION: https://docs.artillex-studios.com/axrankmenu.html
 # ITEM BUILDER: https://docs.artillex-studios.com/item-builder.html
 
+# ===== HOW TO USE SPECIAL ACTIONS =====# ----- GUI SETTINGS -----
+# title: "&0&lʀᴀɴᴋs"
+# [EFFECT] <effect_name> <amplifier> <duration_in_days># a gui can only have 1-6 rows
+#   Example: [EFFECT] SPEED 0 7rows: 3
+#   Grants Speed I effect for 7 days (amplifier 0 = level I, 1 = level II, etc.)# valid values: CHEST, WORKBENCH, HOPPER, DISPENSER, BREWING
+#   Effect persists through death and server restartstype: CHEST
+#
+# [ITEM] <material> <amount> <duration_in_days># ----- ITEMS -----
+#   Example: [ITEM] DIAMOND 64 7
+#   Gives 64 diamonds per day for 7 daysVIP:
+#   Player receives items daily until duration expires  # the name of the rank
+#  rank: "VIP"
+# required-playtime-hours: <hours>  # set to "" to use the current server
+#   Example: required-playtime-hours: 24  server: ""
+#   Player must have at least this many hours of playtime to purchase the rank  # the price of the rank (check the hooks section)
+#   Use 0 for no playtime requirement  price: 1000.0
+# check the hooks section
+
 # ----- GUI SETTINGS -----
-title: "&0&lʀᴀɴᴋs"
+title: "&0&lGrindable Ranks"
 # a gui can only have 1-6 rows
 rows: 3
 # valid values: CHEST, WORKBENCH, HOPPER, DISPENSER, BREWING
@@ -19,6 +37,8 @@ VIP:
   price: 1000.0
   # check the hooks section
   currency: Vault
+  # prevent players from buying this rank multiple times
+  one-time-purchase: true
   # where the item should be in the /ranks gui?
   slot: 12
   item:
@@ -35,36 +55,241 @@ VIP:
   buy-actions:
     - "[MESSAGE] &#00EE00You have purchased the &f%name%&#00EE00! &7(%rank%)"
     - "[CONSOLE] lp user %player% parent set VIP"
+    - "[ITEM] DIAMOND:5:&#00FF00VIP Diamond 7"  # 5 diamonds daily for 7 days
     - "[CLOSE] menu"
 
-MVP:
-  rank: "MVP"
+example:
+  rank: example
+  server: ''
+  price: 2200000
+  currency: Vault
+  one-time-purchase: true
+  slot: 14
+  item:
+    type: LIGHT_BLUE_BANNER
+    name: '&#00FFFF&lSolari &fRANK'
+    lore:
+    - ' '
+    - ' &7- &fPrice: &#00AA00$%price%'
+    - ' '
+    - '&#00FFFFᴘᴇʀᴍɪssɪᴏɴs'
+    - ' &7- &f%permission%'
+    - ' '
+    - '&#00FFFF&l(!) &#00FFFFClick here to purchase!'
+  buy-actions:
+  - '[MESSAGE] &#00EE00You have purchased the &f%name%&#00EE00! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set example'
+  - '[CONSOLE] eco give %player% 1100'
+  - '[CONSOLE] crates key give %player% tools_key 15'
+  - '[CONSOLE] crates key give %player% armory_key 15'
+  - '[CONSOLE] crates key give %player% weapons_key 15'
+  - '[CONSOLE] trail endrod %player%'
+  - '[ITEM] EMERALD:10:&#00FFFFSolari Emerald 30'  # 10 emeralds daily for 30 days
+  - '[ITEM] GOLDEN_APPLE:3:&#FFD700Solari Golden Apple 30'  # 3 golden apples daily for 30 days
+  - '[CLOSE] menu'
+
+# ===== GRINDABLE RANKS SYSTEM =====
+# These ranks are unlocked (become purchasable) based on playtime
+
+example2:
+  rank: "example2"
   server: ""
-  price: 10000.0
+  required-playtime-hours: 96  # 4 days of playtime (unlocks at 96 hours)
+  price: 150000
+  currency: Vault
+  slot: 10
+  item:
+    type: "ENCHANTING_TABLE"
+    name: "&#9966FF&lexample2 &fRANK"
+    lore:
+      - " "
+      - " &7- &fRequired Playtime: &#9966FF96 hours (4 days)"
+      - " &7- &fPrice: &#00AA00$%price%"
+      - " "
+      - "&#9966FFʀᴇᴡᴀʀᴅs"
+      - " &7- &fSpeed I for 7 days"
+      - " &7- &fNight Vision I for 7 days"
+      - " &7- &fDaily Iron x16 for 7 days"
+      - " "
+      - "&#9966FF&l(!) &#9966FFUnlocks at 96 hours playtime!"
+  buy-actions:
+    - "[MESSAGE] &#9966FFCongratulations! You have purchased the example2 rank!"
+    - "[CONSOLE] lp user %player% parent set example2"
+    - "[EFFECT] SPEED 0 7"  # Speed I for 7 days
+    - "[EFFECT] NIGHT_VISION 0 7"  # Night Vision I for 7 days
+    - "[ITEM] IRON_INGOT:16:&#9966FFEnchanter Iron 7"
+
+enchanted:
+  rank: Enchanted
+  server: ''
+  price: 150000
+  currency: Vault
+  slot: 11
+  item:
+    type: LIME_BANNER
+    name: '&#00FF55&lEnchanted'
+    lore:
+    - ' '
+    - ' &7- &fPrice: &#00AA00$%price%'
+    - ' '
+    - '&#00FF55Rank Perks'
+    - ' &7- $75,000'
+    - ' &7- 5 arsenal keys (weapon, tool, armor)'
+    - '&#00FF55&l(!) &#00FF55Click here to purchase!'
+  buy-actions:
+  - '[MESSAGE] &#00FF55You have purchased the &f%name%&#00FF55! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set enchanted'
+  - '[CONSOLE] eco give %player% 75000'
+  - '[CONSOLE] crates key give %player% tools_key 5'
+  - '[CONSOLE] crates key give %player% armory_key 5'
+  - '[CONSOLE] crates key give %player% weapons_key 5'
+  - '[CLOSE] menu'
+
+Arcanist:
+  rank: Arcanist
+  server: ''
+  price: 420000
+  currency: Vault
+  slot: 12
+  item:
+    type: LIGHT_BLUE_BANNER
+    name: '&#00E5FF&lArcanist'
+    lore:
+    - ' '
+    - ' &7- &fPrice: &#00AA00$%price%'
+    - ' '
+    - '&#00E5FFRank Perks'
+    - ' &7- $210,000'
+    - ' &7- 5 arsenal keys (weapon, tool, armor)'
+    - ' &7- +1 sethome'
+    - ' &7- 30 diamonds per day for 3 days'
+    - '&#00E5FF&l(!) &#00E5FFClick here to purchase!'
+  buy-actions:
+  - '[MESSAGE] &#00E5FFYou have purchased the &f%name%&#00E5FF! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set Arcanist'
+  - '[CONSOLE] eco give %player% 210000'
+  - '[CONSOLE] crates key give %player% tools_key 5'
+  - '[CONSOLE] crates key give %player% armory_key 5'
+  - '[CONSOLE] crates key give %player% weapons_key 5'
+  - '[CLOSE] menu'
+
+
+magius:
+  rank: Magius
+  server: ''
+  price: 840000
+  currency: Vault
+  slot: 13
+  item:
+    type: BLUE_BANNER
+    name: '&#00AAFF&lMagius'
+    lore:
+    - ' '
+    - ' &7- &fPrice: &#00AA00$%price%'
+    - ' '
+    - '&#00AAFFRank Perks'
+    - ' &7- $420,000'
+    - ' &7- 10 arsenal keys (weapon, tool, armor)'
+    - ' &7- +1 sethome'
+    - ' &7- /Kits Dias (1 time claim only)'
+    - ' &7- 50 diamonds per day for 5 days'
+    - ' &7- Aura Trail - Ash'
+    - ' &7- 24 hr effect boost - Speed & Luck'
+    - ' &7- Colored Chat (Dark Green)'
+    - '&#00AAFF&l(!) &#00AAFFClick here to purchase!'
+  buy-actions:
+  - '[MESSAGE] &#00AAFFYou have purchased the &f%name%&#00AAFF! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set Magius'
+  - '[CONSOLE] eco give %player% 420000'
+  - '[CONSOLE] crates key give %player% tools_key 10'
+  - '[CONSOLE] crates key give %player% armory_key 10'
+  - '[CONSOLE] crates key give %player% weapons_key 10'
+  - '[CLOSE] menu'
+
+Solari:
+  rank: Solari
+  server: ''
+  price: 2200000
   currency: Vault
   slot: 14
   item:
-    type: "LIGHT_BLUE_BANNER"
-    name: "&#00FFFF&lMVP &fRANK"
+    type: MAGENTA_BANNER
+    name: '&#FF00FF&lSolari'
     lore:
-      - " "
-      - " &7- &fPrice: &#00AA00$%price%"
-      - " "
-      - "&#00FFFFᴘᴇʀᴍɪssɪᴏɴs"
-      - " &7- &f%permission%"
-      - " "
-      - "&#00FFFF&l(!) &#00FFFFClick here to purchase!"
+    - ' '
+    - ' &7- &fPrice: &#00AA00$%price%'
+    - ' '
+    - '&#FF00FFRank Perks'
+    - ' &7- $1,100,000'
+    - ' &7- 15 arsenal keys (weapon, tool, armor)'
+    - ' &7- +1 sethome'
+    - ' &7- /Kits Diamond (Unbreaking 3 & Protection 4)  ( 1 time claim only )'
+    - ' &7- 64 diamonds per day for a week'
+    - ' &7- Endrod Trail'
+    - ' &7- 3 days effect boost'
+    - ' &7- Colored Chat (Aqua)'
+    - '&#FF00FF&l(!) &#FF00FFClick here to purchase!'
   buy-actions:
-    - "[MESSAGE] &#00EE00You have purchased the &f%name%&#00EE00! &7(%rank%)"
-    - "[CONSOLE] lp user %player% parent set MVP"
-    - "[CLOSE] menu"
+  - '[MESSAGE] &#FF00FFYou have purchased the &f%name%&#FF00FF! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set Solari'
+  - '[CONSOLE] eco give %player% 1100000'
+  - '[CONSOLE] crates key give %player% tools_key 15'
+  - '[CONSOLE] crates key give %player% armory_key 15'
+  - '[CONSOLE] crates key give %player% weapons_key 15'
+  - '[CONSOLE] trail endrod %player%'
+  - '[CLOSE] menu'
+
+
+Celestian:
+  rank: Celestian
+  server: ''
+  price: 4000000
+  currency: Vault
+  slot: 15
+  item:
+    type: YELLOW_BANNER
+    name: '&#FFD700&lCelestian'
+    lore:
+    - ' '
+    - ' &7- &fPrice: &#00AA00$%price%'
+    - ' '
+    - '&#FFD700Rank Perks'
+    - ' &7- $2,000,000'
+    - ' &7- 20 arsenal keys (weapon, tool, armor)'
+    - ' &7- +4 /sethome'
+    - ' &7- /Kit Netherite'
+    - ' &7- 128 diamonds per day for a week'
+    - ' &7- Aura Trail (Reselect - Any particle)'
+    - ' &7- 1 week effect boost'
+    - ' &7- /Netherite Kits (Unbreaking 3 & Protection 4 & armor trim of their choosing) (1 time claim only)'
+    - ' &7- Colored Chat (Light Purple) (&d)'
+    - ' &7- Premium Title Effect (broadcasts in chat whenever you join)'
+    - '&#FFD700&l(!) &#FFD700Click here to purchase!'
+  buy-actions:
+  - '[MESSAGE] &#FFD700You have purchased the &f%name%&#FFD700! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set Celestian'
+  - '[CONSOLE] eco give %player% 2000000'
+  - '[CONSOLE] crates key give %player% tools_key 20'
+  - '[CONSOLE] crates key give %player% armory_key 20'
+  - '[CONSOLE] crates key give %player% weapons_key 20'
+  - '[CLOSE] menu'
+
+
+
 
 # you can add as many decorations as you would like
 SOME-DECORATION:
-  slot: [0, 9, 18, 8, 17, 26]
+  slot:
+  - 0
+  - 9
+  - 18
+  - 8
+  - 17
+  - 26
   item:
-    type: "WHITE_STAINED_GLASS_PANE"
-    name: " "
+    type: WHITE_STAINED_GLASS_PANE
+    name: ' '
 
 # do not change
 version: 1
+

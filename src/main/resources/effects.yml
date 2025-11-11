@@ -1,0 +1,8 @@
+# This file stores persistent effect data
+# Format:
+# <uuid>:
+#   effect_0:
+#     type: EFFECT_NAME
+#     amplifier: 0
+#     expiration: <timestamp>
+# This file is automatically managed by the plugin

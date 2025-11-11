@@ -1,22 +1,22 @@
 # DOCUMENTATION: https://docs.artillex-studios.com/axrankmenu.html
 
-prefix: "<gradient:#FFDD00:#FFFF00><b>AxRankMenu</b></gradient> &7» "
+prefix: "<gradient:#9933FF:#CC66FF><b>TheAlleySMP</b></gradient> &7» "
 
 hooks:
   Vault:
     register: true
   PlayerPoints:
-    register: true
+    register: false
   RoyaleEconomy:
-    register: true
+    register: false
   CoinsEngine:
-    register: true
+    register: false
     currency-name: "coins"
   UltraEconomy:
-    register: true
+    register: false
     currency-name: "coins"
   BeastTokens:
-    register: true
+    register: false
   PlaceholderAPI:
     register: true
 
@@ -34,6 +34,13 @@ prevent-downgrading: true
 # NOTE: unless prevent-downgrading is true this will mean what players can freely downgrade their ranks
 discount-ranks: false
 
+# ===== GRINDABLE RANKS SYSTEM =====
+# Automatically grant ranks based on playtime
+grindable-ranks:
+  enabled: true
+  # How often to check for eligible players (in seconds)
+  check-interval: 60
+
 # the plugin will not let the player buy ranks out of order
 # this uses the builtin track system of luckperms, you must define one to use it
 force-buy-order:
@@ -47,6 +54,7 @@ command-aliases:
   - "rankmenu"
   - "rank"
   - "ranks"
+  - "arank"
 
 # should be plugin notify you if there is a new update?
 update-notifier:
@@ -55,5 +63,19 @@ update-notifier:
   # if enabled, it will broadcast the update message to all players who have the <plugin-name>.update-notify permission
   on-join: true
 
+# ===== PERSISTENT EFFECTS SYSTEM =====
+# Effects granted through [EFFECT] action will persist across restarts
+persistent-effects:
+  enabled: true
+  # Apply effects immediately on join
+  apply-on-join: true
+
+# ===== PERSISTENT ITEM REWARDS SYSTEM =====
+# Items granted through [ITEM] action will be given daily for specified duration
+persistent-item-rewards:
+  enabled: true
+  # How often to check and give daily rewards (in hours)
+  check-interval: 1
+
 # do not change
-version: 6
+version: 7

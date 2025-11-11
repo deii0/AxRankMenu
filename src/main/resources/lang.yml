@@ -21,6 +21,13 @@ add-rank: "&#33FF33You have added the &f%rank% &#33FF33rank to the gui! &7Now go
 error:
   buy-order: "&#FF3333You must buy ranks in order!"
   downgrade-disabled: "&#FF3333You can't downgrade your rank!"
+  already-purchased: "&#FF3333You have already purchased this rank! This is a one-time purchase only."
+  insufficient-playtime: "&#FF3333This rank requires %required% hours of playtime! You currently have %current% hours. (%remaining% hours remaining)"
+  requires-previous-rank: "&#FF3333You must purchase the &#FFAA00%rank% &#FF3333rank first before unlocking this one!"
+
+grindable-rank:
+  received: "&#33FF33Congratulations! You have been granted the &f%rank% &#33FF33rank for your dedication!"
+  effect-received: "&#33FF33You have received %effect% (Level %level%) for %days% days!"
 
 commands:
   invalid-value: "&#FF0000Invalid parameter: &#BB0000%value%"
@@ -35,4 +42,4 @@ commands:
 update-notifier: "&#FFEE88There is a new version of AxRankMenu available! &#DDDDDD(&#FFFFFFcurrent: &#FF0000%current% &#DDDDDD| &#FFFFFFlatest: &#00FF00%latest%&#DDDDDD)"
 
 # do not change
-version: 5
+version: 6
