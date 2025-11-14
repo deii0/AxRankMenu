@@ -77,5 +77,70 @@ persistent-item-rewards:
   # How often to check and give daily rewards (in hours)
   check-interval: 1
 
+# ===== MAIN MENU CONFIGURATION =====
+# The main hub menu that opens when typing /rank
+main-menu:
+  title: "&8&lRank Menu"
+  type: CHEST
+  rows: 3
+  buttons:
+    purchasable-ranks:
+      slot: 11
+      item:
+        type: EMERALD
+        name: "&#00FF00&lPurchasable Ranks"
+        lore:
+          - " "
+          - "&7Click to view ranks you can"
+          - "&7purchase with in-game money!"
+          - " "
+          - "&#00FF00&l(!) &#00FF00Click to view!"
+    paid-ranks:
+      slot: 15
+      item:
+        type: DIAMOND
+        name: "&#00AAFF&lPaid Ranks"
+        lore:
+          - " "
+          - "&7Premium ranks available"
+          - "&7through our Discord server!"
+          - " "
+          - "&#FFD700&lExclusive Perks & Rewards"
+          - " "
+          - "&#00AAFF&l(!) &#00AAFFClick to view!"
+  items:
+    decoration:
+      slot:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 17
+        - 18
+        - 19
+        - 20
+        - 21
+        - 22
+        - 23
+        - 24
+        - 25
+        - 26
+      item:
+        type: BLACK_STAINED_GLASS_PANE
+        name: " "
+
+# ===== PAID RANKS CONFIGURATION =====
+# Configuration for ranks purchasable only through Discord
+paid-ranks:
+  # Discord link where players can purchase paid ranks
+  discord-link: "https://discord.gg/yourserver"
+  # Should the plugin send a clickable link?
+  send-clickable-link: true
+
 # do not change
-version: 7
+version: 8

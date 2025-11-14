@@ -29,6 +29,9 @@ grindable-rank:
   received: "&#33FF33Congratulations! You have been granted the &f%rank% &#33FF33rank for your dedication!"
   effect-received: "&#33FF33You have received %effect% (Level %level%) for %days% days!"
 
+paid-ranks:
+  purchase-message: "&#FFD700This rank can only be purchased through Discord! &#FFFFFFVisit: &#00AAFF%link%"
+
 commands:
   invalid-value: "&#FF0000Invalid parameter: &#BB0000%value%"
   invalid-command: "&#FF0000Invalid command or subcommand!"

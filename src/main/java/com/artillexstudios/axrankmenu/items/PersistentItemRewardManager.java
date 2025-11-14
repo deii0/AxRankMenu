@@ -18,7 +18,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 import static com.artillexstudios.axrankmenu.AxRankMenu.getInstance;
 
@@ -124,14 +123,35 @@ public class PersistentItemRewardManager {
 
     /**
      * Give item to player (tries to add to inventory, drops if full)
+     * Supports unlimited amounts by splitting into multiple stacks
      */
     private static void giveItem(Player player, ItemStack itemStack) {
-        HashMap<Integer, ItemStack> leftover = player.getInventory().addItem(itemStack.clone());
-        if (!leftover.isEmpty()) {
-            for (ItemStack item : leftover.values()) {
-                player.getWorld().dropItem(player.getLocation(), item);
+        int totalAmount = itemStack.getAmount();
+        int maxStackSize = itemStack.getMaxStackSize();
+        
+        // Split into multiple stacks if amount exceeds max stack size
+        List<ItemStack> stacks = new ArrayList<>();
+        while (totalAmount > 0) {
+            int stackAmount = Math.min(totalAmount, maxStackSize);
+            ItemStack stack = itemStack.clone();
+            stack.setAmount(stackAmount);
+            stacks.add(stack);
+            totalAmount -= stackAmount;
+        }
+        
+        // Give each stack to player
+        for (ItemStack stack : stacks) {
+            HashMap<Integer, ItemStack> leftover = player.getInventory().addItem(stack);
+            if (!leftover.isEmpty()) {
+                for (ItemStack item : leftover.values()) {
+                    player.getWorld().dropItem(player.getLocation(), item);
+                }
             }
-            player.sendMessage(StringUtils.formatToString("&#FF9900Your inventory is full! Items dropped at your feet."));
+        }
+        
+        // Only show message once if items were dropped
+        if (stacks.size() > 0 && player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(StringUtils.formatToString("&#FF9900Your inventory is full! Some items were dropped at your feet."));
         }
     }
 

@@ -1,34 +1,113 @@
-# DOCUMENTATION: https://docs.artillex-studios.com/axrankmenu.html
-# ITEM BUILDER: https://docs.artillex-studios.com/item-builder.html
-
-# ===== HOW TO USE SPECIAL ACTIONS =====# ----- GUI SETTINGS -----
-# title: "&0&lʀᴀɴᴋs"
-# [EFFECT] <effect_name> <amplifier> <duration_in_days># a gui can only have 1-6 rows
-#   Example: [EFFECT] SPEED 0 7rows: 3
-#   Grants Speed I effect for 7 days (amplifier 0 = level I, 1 = level II, etc.)# valid values: CHEST, WORKBENCH, HOPPER, DISPENSER, BREWING
-#   Effect persists through death and server restartstype: CHEST
+# ===== HOW TO USE SPECIAL ACTIONS =====
+# [EFFECT] <effect_name> <amplifier> <duration_in_days>
+#   Example: [EFFECT] SPEED 0 7
+#   Grants Speed I effect for 7 days (amplifier 0 = level I, 1 = level II, etc.)
+#   Effect persists through death and server restarts
 #
-# [ITEM] <material> <amount> <duration_in_days># ----- ITEMS -----
-#   Example: [ITEM] DIAMOND 64 7
-#   Gives 64 diamonds per day for 7 daysVIP:
-#   Player receives items daily until duration expires  # the name of the rank
-#  rank: "VIP"
-# required-playtime-hours: <hours>  # set to "" to use the current server
-#   Example: required-playtime-hours: 24  server: ""
-#   Player must have at least this many hours of playtime to purchase the rank  # the price of the rank (check the hooks section)
-#   Use 0 for no playtime requirement  price: 1000.0
-# check the hooks section
+# [ITEM] <material>:<amount>:<name> <duration_in_days>
+#   Format: MATERIAL:AMOUNT:NAME DAYS (space before days!)
+#   Example: [ITEM] DIAMOND:64:&#FFD700Daily_Diamond 7
+#   Gives 64 diamonds per day for 7 days
+#   Example: [ITEM] DIAMOND:128:&#FFD700Mega_Diamond 30
+#   Gives 128 diamonds per day for 30 days (auto-splits into multiple stacks)
+#   Example: [ITEM] DIAMOND_SWORD:1:&#FFFFFFLegendary_Sword:SHARPNESS:5,FIRE_ASPECT:2 7
+#   Gives enchanted sword daily for 7 days
+#   Note: Use underscores in names (they become spaces in-game)
+#   Supports UNLIMITED amounts - items will be split into multiple stacks automatically
+#   Player receives items daily until duration expires
+#
+# required-playtime-hours: <hours>
+#   Example: required-playtime-hours: 24
+#   Player must have at least this many hours of playtime to purchase the rank
+#   Use 0 for no playtime requirement
 
-# ----- GUI SETTINGS -----
-title: "&0&lGrindable Ranks"
-# a gui can only have 1-6 rows
-rows: 3
-# valid values: CHEST, WORKBENCH, HOPPER, DISPENSER, BREWING
-type: CHEST
+# ===== PURCHASABLE RANKS GUI =====
+# In-game purchasable ranks with money
+purchasable-ranks:
+  title: "&0&lPurchasable Ranks"
+  type: CHEST
+  rows: 6
+  back-button:
+    slot: 0
+    item:
+      type: ARROW
+      name: "&c&lBack"
+      lore:
+        - "&7Click to return to main menu"
+  items:
+    decoration:
+      slot:
+        - 1
+        - 2
+        - 3
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 17
+        - 18
+        - 26
+        - 27
+        - 35
+        - 36
+        - 44
+        - 45
+        - 46
+        - 47
+        - 48
+        - 50
+        - 51
+        - 52
+        - 53
+      item:
+        type: WHITE_STAINED_GLASS_PANE
+        name: " "
 
-# ----- ITEMS -----
+# ===== PAID RANKS GUI =====
+# Discord-only purchasable ranks
+paid-ranks:
+  title: "&0&lPaid Ranks (Discord Only)"
+  type: CHEST
+  rows: 6
+  back-button:
+    slot: 0
+    item:
+      type: ARROW
+      name: "&c&lBack"
+      lore:
+        - "&7Click to return to main menu"
+  items:
+    decoration:
+      slot:
+        - 1
+        - 2
+        - 3
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 17
+        - 18
+        - 26
+        - 27
+        - 35
+        - 36
+        - 44
+        - 45
+        - 46
+        - 47
+        - 48
+        - 50
+        - 51
+        - 52
+        - 53
+      item:
+        type: PURPLE_STAINED_GLASS_PANE
+        name: " "
 
-VIP:
+# ----- PURCHASABLE RANKS (In-Game) -----
   # the name of the rank
   rank: "VIP"
   # set to "" to use the current server
@@ -55,7 +134,7 @@ VIP:
   buy-actions:
     - "[MESSAGE] &#00EE00You have purchased the &f%name%&#00EE00! &7(%rank%)"
     - "[CONSOLE] lp user %player% parent set VIP"
-    - "[ITEM] DIAMOND:5:&#00FF00VIP Diamond 7"  # 5 diamonds daily for 7 days
+    - "[ITEM] DIAMOND:5:&#00FF00VIP_Diamond 7"  # 5 diamonds daily for 7 days
     - "[CLOSE] menu"
 
 example:
@@ -84,8 +163,8 @@ example:
   - '[CONSOLE] crates key give %player% armory_key 15'
   - '[CONSOLE] crates key give %player% weapons_key 15'
   - '[CONSOLE] trail endrod %player%'
-  - '[ITEM] EMERALD:10:&#00FFFFSolari Emerald 30'  # 10 emeralds daily for 30 days
-  - '[ITEM] GOLDEN_APPLE:3:&#FFD700Solari Golden Apple 30'  # 3 golden apples daily for 30 days
+  - '[ITEM] EMERALD:10:&#00FFFFSolari_Emerald 30'  # 10 emeralds daily for 30 days
+  - '[ITEM] GOLDEN_APPLE:3:&#FFD700Solari_Golden_Apple 30'  # 3 golden apples daily for 30 days
   - '[CLOSE] menu'
 
 # ===== GRINDABLE RANKS SYSTEM =====
@@ -117,7 +196,7 @@ example2:
     - "[CONSOLE] lp user %player% parent set example2"
     - "[EFFECT] SPEED 0 7"  # Speed I for 7 days
     - "[EFFECT] NIGHT_VISION 0 7"  # Night Vision I for 7 days
-    - "[ITEM] IRON_INGOT:16:&#9966FFEnchanter Iron 7"
+    - "[ITEM] IRON_INGOT:16:&#9966FFEnchanter_Iron 7"
 
 enchanted:
   rank: Enchanted
@@ -246,6 +325,7 @@ Celestian:
   price: 4000000
   currency: Vault
   slot: 15
+  paid-only: false  # In-game purchasable
   item:
     type: YELLOW_BANNER
     name: '&#FFD700&lCelestian'
@@ -272,8 +352,117 @@ Celestian:
   - '[CONSOLE] crates key give %player% tools_key 20'
   - '[CONSOLE] crates key give %player% armory_key 20'
   - '[CONSOLE] crates key give %player% weapons_key 20'
+  - '[ITEM] DIAMOND:128:&#FFD700Celestian_Diamond 7'  # 128 diamonds daily for 7 days (2 stacks)
+  - '[EFFECT] SPEED 1 7'  # Speed II for 7 days
   - '[CLOSE] menu'
 
+
+# ----- PAID RANKS (Discord Only) -----
+# Add paid-only: true to mark ranks as Discord-purchasable only
+
+PREMIUM:
+  rank: PREMIUM
+  server: ''
+  slot: 11
+  paid-only: true  # Discord only!
+  item:
+    type: NETHER_STAR
+    name: '&#FF00FF&lPREMIUM &fRANK'
+    lore:
+    - ' '
+    - '&#FF00FF&lEXCLUSIVE DISCORD RANK'
+    - ' '
+    - '&#FF00FFPremium Perks:'
+    - ' &7- All previous rank benefits'
+    - ' &7- Exclusive Discord role'
+    - ' &7- Priority support'
+    - ' &7- Custom join message'
+    - ' &7- Permanent Speed II & Jump Boost I'
+    - ' &7- 10 Netherite Ingots daily for 30 days'
+    - ' &7- 256 Diamonds daily for 30 days'
+    - ' &7- Access to /premium command'
+    - ' '
+    - '&#FFD700&lPurchase on Discord!'
+    - '&#00AAFF&l(!) &#00AAFFClick for details'
+  buy-actions:
+  - '[MESSAGE] &#FF00FFYou have purchased the &f%name%&#FF00FF! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set PREMIUM'
+  - '[ITEM] NETHERITE_INGOT:10:&#FF00FFPremium_Netherite 30'  # 10 netherite daily for 30 days
+  - '[ITEM] DIAMOND:256:&#FF00FFPremium_Diamond 30'  # 256 diamonds daily (4 stacks)
+  - '[EFFECT] SPEED 1 365'  # Speed II for 1 year
+  - '[EFFECT] JUMP 0 365'  # Jump Boost I for 1 year
+  - '[CLOSE] menu'
+
+ELITE:
+  rank: ELITE
+  server: ''
+  slot: 13
+  paid-only: true  # Discord only!
+  item:
+    type: BEACON
+    name: '&#FFD700&lELITE &fRANK'
+    lore:
+    - ' '
+    - '&#FFD700&lULTIMATE DISCORD RANK'
+    - ' '
+    - '&#FFD700Elite Perks:'
+    - ' &7- All Premium rank benefits'
+    - ' &7- Exclusive Elite Discord role'
+    - ' &7- Private Elite-only channel'
+    - ' &7- Custom chat color & prefix'
+    - ' &7- Permanent Regeneration I & Resistance I'
+    - ' &7- 1 Diamond Block daily for 60 days'
+    - ' &7- 500 Gold Ingots daily for 60 days'
+    - ' &7- Access to /elite command'
+    - ' &7- Priority queue during server restarts'
+    - ' '
+    - '&#FFD700&lPurchase on Discord!'
+    - '&#00AAFF&l(!) &#00AAFFClick for details'
+  buy-actions:
+  - '[MESSAGE] &#FFD700You have purchased the &f%name%&#FFD700! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set ELITE'
+  - '[ITEM] DIAMOND_BLOCK:1:&#FFD700Elite_Diamond_Block 60'  # 1 diamond block daily
+  - '[ITEM] GOLD_INGOT:500:&#FFD700Elite_Gold 60'  # 500 gold daily (7.8 stacks)
+  - '[EFFECT] REGENERATION 0 365'  # Regen I for 1 year
+  - '[EFFECT] DAMAGE_RESISTANCE 0 365'  # Resistance I for 1 year
+  - '[CLOSE] menu'
+
+ULTIMATE:
+  rank: ULTIMATE
+  server: ''
+  slot: 15
+  paid-only: true  # Discord only!
+  item:
+    type: DRAGON_HEAD
+    name: '&#9900FF&lULTIMATE &fRANK'
+    lore:
+    - ' '
+    - '&#9900FF&lLEGENDARY DISCORD RANK'
+    - ' '
+    - '&#9900FFUltimate Perks:'
+    - ' &7- All Elite rank benefits'
+    - ' &7- Legendary Discord role with exclusive color'
+    - ' &7- Access to Ultimate-only voice channel'
+    - ' &7- Rainbow chat color & animated prefix'
+    - ' &7- All permanent effects (Speed II, Jump II, Regen II)'
+    - ' &7- 5 Diamond Blocks daily for 90 days'
+    - ' &7- 1000 Emeralds daily for 90 days'
+    - ' &7- Access to /ultimate command suite'
+    - ' &7- Exclusive cosmetics & particles'
+    - ' &7- Your name in credits & thank you board'
+    - ' '
+    - '&#FFD700&lPurchase on Discord!'
+    - '&#00AAFF&l(!) &#00AAFFClick for details'
+  buy-actions:
+  - '[MESSAGE] &#9900FFYou have purchased the &f%name%&#9900FF! &7(%rank%)'
+  - '[CONSOLE] lp user %player% parent set ULTIMATE'
+  - '[ITEM] DIAMOND_BLOCK:5:&#9900FFUltimate_Diamond_Block 90'  # 5 diamond blocks daily
+  - '[ITEM] EMERALD:1000:&#9900FFUltimate_Emerald 90'  # 1000 emeralds daily (15.6 stacks!)
+  - '[ITEM] NETHERITE_BLOCK:2:&#9900FFUltimate_Netherite 90'  # 2 netherite blocks daily
+  - '[EFFECT] SPEED 1 365'  # Speed II for 1 year
+  - '[EFFECT] JUMP 1 365'  # Jump Boost II for 1 year
+  - '[EFFECT] REGENERATION 1 365'  # Regen II for 1 year
+  - '[CLOSE] menu'
 
 
 

@@ -1,5 +1,8 @@
 package com.artillexstudios.axrankmenu.gui;
 
+import com.artillexstudios.axrankmenu.gui.impl.MainMenuGui;
+import com.artillexstudios.axrankmenu.gui.impl.PurchasableRanksGui;
+import com.artillexstudios.axrankmenu.gui.impl.PaidRanksGui;
 import com.artillexstudios.axrankmenu.gui.impl.RankGui;
 
 import java.util.concurrent.Executors;
@@ -16,6 +19,15 @@ public class GuiUpdater {
         service.scheduleAtFixedRate(() -> {
             try {
                 for (RankGui gui : RankGui.getOpenMenus()) {
+                    gui.open();
+                }
+                for (MainMenuGui gui : MainMenuGui.getOpenMenus()) {
+                    gui.open();
+                }
+                for (PurchasableRanksGui gui : PurchasableRanksGui.getOpenMenus()) {
+                    gui.open();
+                }
+                for (PaidRanksGui gui : PaidRanksGui.getOpenMenus()) {
                     gui.open();
                 }
             } catch (Exception ex) {

@@ -6,7 +6,9 @@ import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axrankmenu.commands.annotations.Groups;
 import com.artillexstudios.axrankmenu.effects.PersistentEffectManager;
 import com.artillexstudios.axrankmenu.grindable.GrindableRankManager;
-import com.artillexstudios.axrankmenu.gui.impl.RankGui;
+import com.artillexstudios.axrankmenu.gui.impl.MainMenuGui;
+import com.artillexstudios.axrankmenu.gui.impl.PurchasableRanksGui;
+import com.artillexstudios.axrankmenu.gui.impl.PaidRanksGui;
 import com.artillexstudios.axrankmenu.hooks.HookManager;
 import com.artillexstudios.axrankmenu.items.PersistentItemRewardManager;
 import com.artillexstudios.axrankmenu.utils.CommandMessages;
@@ -46,7 +48,19 @@ public class Commands implements OrphanCommand {
     @DefaultFor({"~", "~ open"})
     @CommandPermission(value = "axrankmenu.use")
     public void open(@NotNull Player sender) {
-        new RankGui(sender).open();
+        new MainMenuGui(sender).open();
+    }
+    
+    @Subcommand({"purchasable"})
+    @CommandPermission(value = "axrankmenu.use")
+    public void purchasable(@NotNull Player sender) {
+        new PurchasableRanksGui(sender).open();
+    }
+    
+    @Subcommand({"paid"})
+    @CommandPermission(value = "axrankmenu.use")
+    public void paid(@NotNull Player sender) {
+        new PaidRanksGui(sender).open();
     }
 
     @Subcommand({"reload"})
