@@ -196,6 +196,16 @@ public class PersistentEffectManager {
             List<PersistentEffect> effects = activeEffects.get(playerId);
             if (effects == null) continue;
             
+            // Remove expired effects from online players BEFORE removing from list
+            Player player = Bukkit.getPlayer(playerId);
+            if (player != null && player.isOnline()) {
+                for (PersistentEffect effect : new ArrayList<>(effects)) {
+                    if (effect.isExpired()) {
+                        player.removePotionEffect(effect.getEffectType());
+                    }
+                }
+            }
+            
             int beforeSize = effects.size();
             effects.removeIf(PersistentEffect::isExpired);
             
@@ -204,17 +214,6 @@ public class PersistentEffectManager {
                 changed = true;
             } else if (effects.size() != beforeSize) {
                 changed = true;
-            }
-            
-            // Remove effects from online players
-            Player player = Bukkit.getPlayer(playerId);
-            if (player != null && player.isOnline() && effects.size() != beforeSize) {
-                // Check which effects were removed and clear them from player
-                for (PersistentEffect effect : effects) {
-                    if (effect.isExpired()) {
-                        player.removePotionEffect(effect.getEffectType());
-                    }
-                }
             }
         }
         

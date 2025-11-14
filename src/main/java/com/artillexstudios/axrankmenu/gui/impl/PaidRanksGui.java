@@ -49,10 +49,7 @@ public class PaidRanksGui extends GuiFrame {
         // Add decorative items from paid-ranks.items section
         for (String str : RANKS.getBackingDocument().getRoutesAsStrings(false)) {
             if (str.startsWith("paid-ranks.items.")) {
-                String remainder = str.substring("paid-ranks.items.".length());
-                if (!remainder.contains(".")) {
-                    createItem(str);
-                }
+                createItem(str);
             }
         }
 

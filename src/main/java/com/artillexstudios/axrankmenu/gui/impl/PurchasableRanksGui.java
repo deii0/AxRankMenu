@@ -39,10 +39,7 @@ public class PurchasableRanksGui extends GuiFrame {
         // Add decorative items from purchasable-ranks.items section
         for (String str : RANKS.getBackingDocument().getRoutesAsStrings(false)) {
             if (str.startsWith("purchasable-ranks.items.")) {
-                String remainder = str.substring("purchasable-ranks.items.".length());
-                if (!remainder.contains(".")) {
-                    createItem(str);
-                }
+                createItem(str);
             }
         }
 

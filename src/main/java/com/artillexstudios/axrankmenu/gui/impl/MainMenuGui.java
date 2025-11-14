@@ -34,10 +34,7 @@ public class MainMenuGui extends GuiFrame {
         // Add decorative items from main-menu.items section
         for (String str : CONFIG.getBackingDocument().getRoutesAsStrings(false)) {
             if (str.startsWith("main-menu.items.")) {
-                String remainder = str.substring("main-menu.items.".length());
-                if (!remainder.contains(".")) {
-                    createItem(str);
-                }
+                createItem(str);
             }
         }
 
